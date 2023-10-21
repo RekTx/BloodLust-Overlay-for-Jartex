@@ -172,7 +172,7 @@ void gridgraphic::drawGrid(string path, string type, float& opacity, bool& topMo
 	if (type == "bw")
 		amTitle = 10;
 	else
-		amTitle = 8;
+		amTitle = 9;
 
 	int screenWidth = (amTitle * 100) - 60;
 	float origWidth = screenWidth;
@@ -862,10 +862,11 @@ void gridgraphic::drawGrid(string path, string type, float& opacity, bool& topMo
 					DrawTextEx(arialFont, "Name", { x + (200 * scaleX), y }, fontSize * scaleX, 2, WHITE);
 					x = 100;
 					DrawTextEx(arialFont, "Wins", { x + (300 * scaleX), y }, fontSize * scaleX, 2, WHITE);
-					DrawTextEx(arialFont, "Wlr", { x + (350 * scaleX), y }, fontSize * scaleX, 2, WHITE);
-					DrawTextEx(arialFont, "KDR", { x + (400 * scaleX), y }, fontSize * scaleX, 2, WHITE);
-					DrawTextEx(arialFont, "Ws (All)", { x + (470 * scaleX), y }, fontSize * scaleX, 2, WHITE);
-					DrawTextEx(arialFont, "Clan", { x + (550 * scaleX), y }, fontSize * scaleX, 2, WHITE);
+					DrawTextEx(arialFont, "Losses", { x + (350 * scaleX), y }, fontSize* scaleX, 2, WHITE);
+					DrawTextEx(arialFont, "Wlr", { x + (430 * scaleX), y }, fontSize * scaleX, 2, WHITE);
+					DrawTextEx(arialFont, "KDR", { x + (480 * scaleX), y }, fontSize * scaleX, 2, WHITE);
+					DrawTextEx(arialFont, "Ws (All)", { x + (550 * scaleX), y }, fontSize * scaleX, 2, WHITE);
+					DrawTextEx(arialFont, "Clan", { x + (630 * scaleX), y }, fontSize * scaleX, 2, WHITE);
 					y += yFac;
 
 					for (auto player : players) {
@@ -1017,6 +1018,37 @@ void gridgraphic::drawGrid(string path, string type, float& opacity, bool& topMo
 							DrawTextEx(arialRoundFont, to_string(player.wins).c_str(), { x + 300, y }, fontSize * scaleX, 2, tempColor);
 						}
 
+						// losses
+
+						if (player.losses < 1000)
+							tempColor = GRAY;
+						else if (player.losses < 2000)
+							tempColor = WHITE;
+						else if (player.losses < 3000)
+							tempColor = YELLOW;
+						else if (player.losses < 5000)
+							tempColor = ORANGE;
+						else
+							tempColor = MAROON;
+
+						if (player.isNicked)
+							DrawTextEx(arialRoundFont, string("   -").c_str(), { x + (350 * scaleX), y }, fontSize * scaleX, 2, MAROON);
+						else {
+
+							if (hasBorder) {
+
+								DrawTextEx(arialRoundFont, to_string(player.losses).c_str(), { x - 1 + (350 * scaleX), y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, to_string(player.losses).c_str(), { x - 1 + (350 * scaleX), y + 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, to_string(player.losses).c_str(), { x + 1 + (350 * scaleX), y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, to_string(player.losses).c_str(), { x + 1 + (350 * scaleX), y + 1 }, fontSize * scaleX, 2, borderColor);
+
+							}
+
+							DrawTextEx(arialRoundFont, to_string(player.losses).c_str(), { x + (350 * scaleX), y }, fontSize * scaleX, 2, tempColor);
+						}
+
+						//
+
 						if (player.wlr < 2)
 							tempColor = GRAY;
 						else if (player.wlr < 5)
@@ -1033,19 +1065,19 @@ void gridgraphic::drawGrid(string path, string type, float& opacity, bool& topMo
 						string fkdrString = ss.str();
 
 						if (player.isNicked)
-							DrawTextEx(arialRoundFont, string("   -").c_str(), { x + 350, y }, fontSize * scaleX, 2, MAROON);
+							DrawTextEx(arialRoundFont, string("   -").c_str(), { x + 430, y }, fontSize * scaleX, 2, MAROON);
 						else {
 
 							if (hasBorder) {
 
-								DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 350 - 1, y - 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 350 - 1, y + 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 350 + 1, y - 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 350 + 1, y + 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 430 - 1, y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 430 - 1, y + 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 430 + 1, y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 430 + 1, y + 1 }, fontSize * scaleX, 2, borderColor);
 
 							}
 
-							DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 350, y }, fontSize * scaleX, 2, tempColor);
+							DrawTextEx(arialRoundFont, fkdrString.c_str(), { x + 430, y }, fontSize * scaleX, 2, tempColor);
 						}
 
 						if (player.fkdr < 3)
@@ -1064,19 +1096,19 @@ void gridgraphic::drawGrid(string path, string type, float& opacity, bool& topMo
 						string wlrString = ss1.str();
 
 						if (player.isNicked)
-							DrawTextEx(arialRoundFont, string("   -").c_str(), { x + 400, y }, fontSize * scaleX, 2, MAROON);
+							DrawTextEx(arialRoundFont, string("   -").c_str(), { x + 480, y }, fontSize * scaleX, 2, MAROON);
 						else {
 
 							if (hasBorder) {
 
-								DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 400 - 1, y - 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 400 - 1, y + 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 400 + 1, y - 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 400 + 1, y + 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 480 - 1, y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 480 - 1, y + 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 480 + 1, y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 480 + 1, y + 1 }, fontSize * scaleX, 2, borderColor);
 
 							}
 
-							DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 400, y }, fontSize* scaleX, 2, tempColor);
+							DrawTextEx(arialRoundFont, wlrString.c_str(), { x + 480, y }, fontSize* scaleX, 2, tempColor);
 						}
 
 						if (player.wsLifetime < 100)
@@ -1091,35 +1123,35 @@ void gridgraphic::drawGrid(string path, string type, float& opacity, bool& topMo
 							tempColor = MAROON;
 
 						if (player.isNicked)
-							DrawTextEx(arialRoundFont, string("   -").c_str(), { x + 470, y }, fontSize * scaleX, 2, MAROON);
-						else {
-
-							if (hasBorder) {
-
-								DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 470 - 1, y - 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 470 - 1, y + 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 470 + 1, y - 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 470 + 1, y + 1 }, fontSize * scaleX, 2, borderColor);
-
-							}
-
-							DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 470, y }, fontSize * scaleX, 2, tempColor);
-						}
-
-						if (player.isNicked)
 							DrawTextEx(arialRoundFont, string("   -").c_str(), { x + 550, y }, fontSize * scaleX, 2, MAROON);
 						else {
 
 							if (hasBorder) {
 
-								DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 550 - 1, y - 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 550 - 1, y + 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 550 + 1, y - 1 }, fontSize * scaleX, 2, borderColor);
-								DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 550 + 1, y + 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 550 - 1, y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 550 - 1, y + 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 550 + 1, y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 550 + 1, y + 1 }, fontSize * scaleX, 2, borderColor);
 
 							}
 
-							DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 550, y }, fontSize* scaleX, 2, { 0, 255, 255, 255 });
+							DrawTextEx(arialRoundFont, to_string(player.wsLifetime).c_str(), { x + 550, y }, fontSize * scaleX, 2, tempColor);
+						}
+
+						if (player.isNicked)
+							DrawTextEx(arialRoundFont, string("   -").c_str(), { x + 630, y }, fontSize * scaleX, 2, MAROON);
+						else {
+
+							if (hasBorder) {
+
+								DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 630 - 1, y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 630 - 1, y + 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 630 + 1, y - 1 }, fontSize * scaleX, 2, borderColor);
+								DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 630 + 1, y + 1 }, fontSize * scaleX, 2, borderColor);
+
+							}
+
+							DrawTextEx(arialRoundFont, player.guildTag.c_str(), { x + 630, y }, fontSize* scaleX, 2, { 0, 255, 255, 255 });
 						}
 
 						y += yFac;

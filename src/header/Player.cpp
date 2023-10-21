@@ -192,7 +192,7 @@ void Player::initBw(string& stats, string& interval, bool& fixedStats) {
 
 void Player::initSw(string& stats, string& interval, bool& fixedStats) {
 
-    web::http::client::http_client client(U("https://stats.pika-network.net"));
+    web::http::client::http_client client(U("https://stats.jartexnetwork.com"));
     string tempApiLink = "/api/profile/" + name + "/leaderboard?type=skywars&interval=" + interval + "&mode=" + stats;
     wstring_convert<codecvt_utf8<wchar_t>> converter;
     wstring wideTempApiLink = converter.from_bytes(tempApiLink);
