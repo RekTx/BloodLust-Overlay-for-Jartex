@@ -294,10 +294,10 @@ string getPath(string& gamemode, float& opacity, bool& topMost, bool& topBar, bo
 	return path;
 }
 
-//int main() {
+int main() {
 
 // the line below is for release mode, the int main is for debug mode
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+// int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	float opacity;
 	string type, path, stats, interval, userName, sortby;
