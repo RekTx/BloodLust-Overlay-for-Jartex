@@ -1,0 +1,12 @@
+ign: NAN
+client: lunar
+gamemode: bedwars
+selfstats: false
+stats: lifetime
+interval: lifetime
+sort by: level
+fixedstats: false
+opacity: 60
+topmost: true
+topbar: true
+autoclose: false
